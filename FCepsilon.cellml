@@ -1,0 +1,96 @@
+def model FCepsilonRI as
+    //
+    //*******************************************************
+    //***         U   N   I   T   S                       ***
+    //*******************************************************
+    //
+
+    def unit s as
+        unit second;
+    enddef;
+
+    def unit uM as
+        unit mole {pref: micro};
+        unit liter {expo: -1};
+    enddef;
+
+    def unit per_s as
+        unit s {expo: -1};
+    enddef;
+
+    def unit uM_per_s as
+        unit uM;
+        unit s {expo: -1};
+    enddef;
+
+    def unit per_uM_per_s as
+        unit uM {expo: -1};
+        unit s {expo: -1};
+    enddef;
+      //
+    //*********************************************************
+    //***       C   O   M   P   O   N   E   N   T   S       ***
+    //*********************************************************
+    //
+    
+     def comp environment as
+        var t: s {pub: out};
+    enddef;
+
+    def comp FCepsilonRI as
+        var t: s {pub: in};
+        var J1: uM_per_s;
+        var J2: uM_per_s;
+        var J3: uM_per_s;
+        var J4: uM_per_s;
+        var J5: uM_per_s;
+        var J6: uM_per_s;
+        var J7: uM_per_s;
+        var Lyn: uM {init: 0};
+        var FC: uM {init: 0};
+        var pFC: uM {init: 0};
+        var Syk: uM {init: 0};
+        var pSyk: uM {init: 0};
+        var pGrb2: uM {init: 0};
+        var pFCLyn: uM {init: 0};
+        var pFCSyk: uM {init: 0};
+        var pSykGrb2: uM {init: 0};
+        var Pi: uM {init: 0};
+        var Grb2: uM {init: 0};
+        var pLyn: uM {init: 0};
+        var k_f1: per_uM_per_s {init: 0;
+        var k_r1: per_s {init: 0};
+        var k_f2: per_s {init: 0};
+        var k_f3: per_uM_per_s {init: 0};
+        var k_f4: per_uM_per_s {init: 0}
+        var k_r4: per_s {init: 0};
+        var k_f5: per_s {init:0};
+        var k_f6: per_uM_per_s {init: 0};
+        var k_r6: per_s {init: 0};
+        var k_f7: per_s {init: 0;
+        
+        J1 = k_f1*FC*pLyn-k_r1*pFCLyn;
+        J2 = k_f2*pFCLyn;
+        J3 = k_f3*Pi*Lyn;
+        J4 = k_f4*pFC*Syk-k_r4*pFCSyk;
+        J5 = k_f5*pFCSyk;
+        J6 = k_f6*pSyk*Grb2-k_r6*pSykGrb2;
+        J7 = k_f7*pSykGrb2;
+        ode(FC, t) = -J1+J5;
+        ode(pFC, t) = J2-J4;
+        ode(Syk, t) = -J4+J7;
+        ode(pSyk, t) = J5-J6;
+        ode(Lyn, t) = J2-J3;
+        ode(pLyn, t) = -J1+J3;
+        ode(pFCLyn, t) = J1-J2;
+        ode(pFCSyk, t) = J4-J5;
+        ode(pSykGrb2, t) = J6-J7;
+        ode(Grb2, t) = -J6;
+        ode(pGrb2, t) = J7;
+    enddef;
+
+    def map between environment and FCepsilonRI for
+        vars t and t;
+    enddef;
+enddef;
+
