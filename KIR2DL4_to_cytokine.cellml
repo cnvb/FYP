@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="KIR2DL4_singnaling" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="FC_epsilon_F.cellml">
+        <component component_ref="FCepsilonRI" name="FCepsilonRI"/>
+    </import>
+    <import xlink:href="Cooling_model/NFATMyocyte_TomidaProtocol_Submodel.cellml">
+        <component component_ref="geometry" name="geometry"/>
+        <component component_ref="calcium" name="calcium"/>
+        <component component_ref="calcineurin" name="calcineurin"/>
+        <component component_ref="NFAT_Cycling" name="NFAT_Cycling"/>
+    </import>
+    <!--
+*******************************************************
+***         U   N   I   T   S                       ***
+*******************************************************
+-->
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="uM">
+        <unit prefix="micro" units="mole"/>
+        <unit exponent="-1" units="liter"/>
+    </units>
+    <units name="per_s">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="uM_per_s">
+        <unit units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="per_uM_per_s">
+        <unit exponent="-1" units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="per_uM_s">
+        <unit exponent="-1" units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <!--
+*********************************************************
+***       C   O   M   P   O   N   E   N   T   S       ***
+*********************************************************
+-->
+    <component name="environment">
+        <variable name="t" public_interface="out" units="second"/>
+    </component>
+    <component name="KIR2DL4_HLAg">
+        <variable name="t" public_interface="in" units="second"/>
+        <variable name="J_HLADL4" public_interface="out" units="uM_per_s"/>
+        <variable initial_value="0.02" name="k_f1" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.02" name="k_r1" public_interface="out" units="per_s"/>
+        <variable initial_value="0.1052" name="HLA" public_interface="out" units="uM"/>
+        <variable initial_value="0.1" name="DL4" units="uM"/>
+        <variable initial_value="0" name="HLADL4" public_interface="out" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J_HLADL4</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f1</ci>
+                        <ci>DL4</ci>
+                        <ci>HLA</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r1</ci>
+                        <ci>HLADL4</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>HLA</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J_HLADL4</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>DL4</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J_HLADL4</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="PI3K">
+        <variable name="t" public_interface="in" units="second"/>
+        <variable name="J2" units="uM_per_s"/>
+        <variable name="J3" public_interface="out" units="uM_per_s"/>
+        <variable name="J7" public_interface="in" units="uM_per_s"/>
+        <variable name="pGrb2" public_interface="in" units="uM"/>
+        <variable initial_value="0.01" name="PI3K" units="uM"/>
+        <variable initial_value="0" name="PI3Kstar" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="pGrb2PI3K" units="uM"/>
+        <variable initial_value="7.5" name="k_f2" units="per_uM_per_s"/>
+        <variable initial_value="0.005" name="k_r2" units="per_s"/>
+        <variable initial_value="10.1" name="k_f3" units="per_s"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J2</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f2</ci>
+                        <ci>pGrb2</ci>
+                        <ci>PI3K</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r2</ci>
+                        <ci>pGrb2PI3K</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J3</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f3</ci>
+                    <ci>pGrb2PI3K</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pGrb2</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <ci>J7</ci>
+                        <ci>J2</ci>
+                    </apply>
+                    <ci>J3</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>PI3K</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J2</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pGrb2PI3K</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J2</ci>
+                    <ci>J3</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>PI3Kstar</ci>
+                </apply>
+                <ci>J3</ci>
+            </apply>
+        </math>
+    </component>
+    <component name="NFAT_cytokine">
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="NFATN_n" public_interface="in" units="uM"/>
+        <variable name="J_NFATNn" public_interface="in" units="uM_per_s"/>
+        <variable name="J8" units="uM_per_s"/>
+        <variable name="J10" units="uM_per_s"/>
+        <variable initial_value="0.1" name="k_f8" public_interface="out" units="per_s"/>
+        <variable initial_value="23.0" name="k_f9" public_interface="out" units="per_s"/>
+        <variable initial_value="0" name="IFN" public_interface="out" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J8</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f8</ci>
+                    <ci>NFATN_n</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J10</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f10</ci>
+                    <ci>IFN</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NFATN_n</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J_NFATNn</ci>
+                    <ci>J8</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>IFN</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J8</ci>
+                    <ci>J10</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>
