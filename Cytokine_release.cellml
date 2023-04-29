@@ -25,44 +25,33 @@
 *********************************************************
 -->
     <component name="environment">
-        <variable name="t" public_interface="out" units="s"/>
+        <variable name="t" public_interface="out" units="second"/>
     </component>
-    <component name="NFAT_cytokines">
+    <component name="NFAT_cytokine">
         <variable name="t" public_interface="in" units="s"/>
         <variable name="NFATN_n" public_interface="in" units="uM"/>
         <variable name="J_NFATNn" public_interface="in" units="uM_per_s"/>
-        <variable name="J1" units="uM_per_s"/>
-        <variable name="J2" units="uM_per_s"/>
-        <variable name="J3" units="uM_per_s"/>
-        <variable initial_value="0.1" name="k_f1" public_interface="out" units="per_s"/>
-        <variable initial_value="23.0" name="k_f2" public_interface="out" units="per_s"/>
-        <variable initial_value="0.03" name="k_f3" public_interface="out" units="per_s"/>
+        <variable name="J8" units="uM_per_s"/>
+        <variable name="J10" units="uM_per_s"/>
+        <variable initial_value="0.1" name="k_f8" public_interface="out" units="per_s"/>
+        <variable initial_value="23.0" name="k_f9" public_interface="out" units="per_s"/>
         <variable initial_value="0" name="IFN" public_interface="out" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
-                <ci>J1</ci>
+                <ci>J8</ci>
                 <apply>
                     <times/>
-                    <ci>k_f1</ci>
+                    <ci>k_f8</ci>
                     <ci>NFATN_n</ci>
                 </apply>
             </apply>
             <apply>
                 <eq/>
-                <ci>J2</ci>
+                <ci>J10</ci>
                 <apply>
                     <times/>
-                    <ci>k_f2</ci>
-                    <ci>NFATN_n</ci>
-                </apply>
-            </apply>
-            <apply>
-                <eq/>
-                <ci>J3</ci>
-                <apply>
-                    <times/>
-                    <ci>k_f3</ci>
+                    <ci>k_f10</ci>
                     <ci>IFN</ci>
                 </apply>
             </apply>
@@ -77,12 +66,8 @@
                 </apply>
                 <apply>
                     <minus/>
-                    <apply>
-                        <minus/>
-                        <ci>J_NFATNn</ci>
-                        <ci>J1</ci>
-                    </apply>
-                    <ci>J2</ci>
+                    <ci>J_NFATNn</ci>
+                    <ci>J8</ci>
                 </apply>
             </apply>
             <apply>
@@ -96,14 +81,10 @@
                 </apply>
                 <apply>
                     <minus/>
-                    <ci>J1</ci>
-                    <ci>J3</ci>
+                    <ci>J8</ci>
+                    <ci>J10</ci>
                 </apply>
             </apply>
         </math>
     </component>
-    <connection>
-        <map_components component_1="NFATN_Cytokine" component_2="environment"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
 </model>
