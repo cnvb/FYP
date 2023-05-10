@@ -32,36 +32,38 @@
         <variable name="t" public_interface="out" units="s"/>
     </component>
     <component name="FCepsilonRI">
-        <variable name="t" public_interface="in" units="s"/>
-        <variable name="J1" units="uM_per_s"/>
+        <variable name="t" public_interface="in" units="second"/>
+        <variable name="J1" public_interface="out" units="uM_per_s"/>
         <variable name="J2" units="uM_per_s"/>
         <variable name="J3" units="uM_per_s"/>
         <variable name="J4" units="uM_per_s"/>
-        <variable name="J5" units="uM_per_s"/>
+        <variable name="J5" public_interface="out" units="uM_per_s"/>
         <variable name="J6" units="uM_per_s"/>
-        <variable name="J7" units="uM_per_s"/>
+        <variable name="J7" public_interface="out" units="uM_per_s"/>
         <variable initial_value="0" name="Lyn" units="uM"/>
-        <variable initial_value="0.0474" name="FC" units="uM"/>
+        <variable initial_value="0.0474" name="FC" public_interface="in" units="uM"/>
         <variable initial_value="0" name="pFC" units="uM"/>
         <variable initial_value="0.025" name="Syk" units="uM"/>
         <variable initial_value="0" name="pSyk" units="uM"/>
-        <variable initial_value="0" name="pGrb2" units="uM"/>
-        <variable initial_value="0" name="pFCLyn" units="uM"/>
-        <variable initial_value="0" name="pFCSyk" units="uM"/>
+        <variable initial_value="0" name="pGrb2" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="pHGDL4_FCLyn" units="uM"/>
+        <variable initial_value="0" name="pHGDL4_FCSyk" units="uM"/>
         <variable initial_value="0" name="pSykGrb2" units="uM"/>
-        <variable initial_value="0.403" name="Pi" units="uM"/>
+        <variable initial_value="0.403" name="Pi" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="pHGDL4_FC" units="uM"/>
+        <variable name="HGDL4_FC" public_interface="in" units="uM"/>
         <variable initial_value="0.01" name="Grb2" units="uM"/>
         <variable initial_value="0.0474" name="pLyn" units="uM"/>
-        <variable initial_value="54.77" name="k_f1" units="per_uM_per_s"/>
-        <variable initial_value="0.0031" name="k_r1" units="per_s"/>
-        <variable initial_value="0.00817889" name="k_f2" units="per_s"/>
-        <variable initial_value="0.0035" name="k_f3" units="per_uM_per_s"/>
-        <variable initial_value="10.58" name="k_f4" units="per_uM_per_s"/>
-        <variable initial_value="0.117" name="k_r4" units="per_s"/>
-        <variable initial_value="33.72" name="k_f5" units="per_s"/>
-        <variable initial_value="0.414" name="k_f6" units="per_uM_per_s"/>
-        <variable initial_value="0.481" name="k_r6" units="per_s"/>
-        <variable initial_value="11.42" name="k_f7" units="per_s"/>
+        <variable initial_value="54.77" name="k_f1" public_interface="in" units="per_uM_per_s"/>
+        <variable initial_value="0.0031" name="k_r1" public_interface="in" units="per_s"/>
+        <variable initial_value="0.00817889" name="k_f2" public_interface="out" units="per_s"/>
+        <variable initial_value="0.0035" name="k_f3" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="10.58" name="k_f4" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.117" name="k_r4" public_interface="in" units="per_s"/>
+        <variable initial_value="33.72" name="k_f5" public_interface="in" units="per_s"/>
+        <variable initial_value="0.414" name="k_f6" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.481" name="k_r6" public_interface="in" units="per_s"/>
+        <variable initial_value="11.42" name="k_f7" public_interface="out" units="per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -71,13 +73,13 @@
                     <apply>
                         <times/>
                         <ci>k_f1</ci>
-                        <ci>FC</ci>
+                        <ci>HGDL4_FC</ci>
                         <ci>pLyn</ci>
                     </apply>
                     <apply>
                         <times/>
                         <ci>k_r1</ci>
-                        <ci>pFCLyn</ci>
+                        <ci>pHGDL4_FCLyn</ci>
                     </apply>
                 </apply>
             </apply>
@@ -87,7 +89,7 @@
                 <apply>
                     <times/>
                     <ci>k_f2</ci>
-                    <ci>pFCLyn</ci>
+                    <ci>pHGDL4_FCLyn</ci>
                 </apply>
             </apply>
             <apply>
@@ -108,13 +110,13 @@
                     <apply>
                         <times/>
                         <ci>k_f4</ci>
-                        <ci>pFC</ci>
+                        <ci>pHGDL4_FC</ci>
                         <ci>Syk</ci>
                     </apply>
                     <apply>
                         <times/>
                         <ci>k_r4</ci>
-                        <ci>pFCSyk</ci>
+                        <ci>pHGDL4_FCSyk</ci>
                     </apply>
                 </apply>
             </apply>
@@ -124,7 +126,7 @@
                 <apply>
                     <times/>
                     <ci>k_f5</ci>
-                    <ci>pFCSyk</ci>
+                    <ci>pHGDL4_FCSyk</ci>
                 </apply>
             </apply>
             <apply>
@@ -179,7 +181,7 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>pFC</ci>
+                    <ci>pHGDL4_FC</ci>
                 </apply>
                 <apply>
                     <minus/>
@@ -260,7 +262,7 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>pFCLyn</ci>
+                    <ci>pHGDL4_FCLyn</ci>
                 </apply>
                 <apply>
                     <minus/>
@@ -275,7 +277,7 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>pFCSyk</ci>
+                    <ci>pHGDL4_FCSyk</ci>
                 </apply>
                 <apply>
                     <minus/>

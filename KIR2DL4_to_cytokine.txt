@@ -1,0 +1,229 @@
+def model KIR2DL4_singnaling as
+    def import using "KIR2DL4_HLAg.cellml" for
+        comp KIR2DL4_HLAg using comp KIR2DL4_HLAg;
+    enddef;
+
+    def import using "FC_epsilon.cellml" for
+        comp FCepsilonRI using comp FCepsilonRI;
+    enddef;
+
+    def import using "PI3K.cellml" for
+        comp PI3K using comp PI3K;
+    enddef;
+
+    def import using "Cooling_model/NFATMyocyte_TomidaProtocol_Submodel.cellml" for
+        comp geometry using comp geometry;
+        comp calcium using comp calcium;
+        comp calcineurin using comp calcineurin;
+        comp NFAT_Cycling using comp NFAT_Cycling;
+        comp NFAT_Cycling_equations using comp NFAT_Cycling_equations;
+    enddef;
+
+    def import using "Cytokine_release.cellml" for
+        comp NFAT_cytokines using comp NFAT_cytokines;
+    enddef;
+
+    //
+    //*******************************************************
+    //***         U   N   I   T   S                       ***
+    //*******************************************************
+    //
+
+    def unit s as
+        unit second;
+    enddef;
+
+    def unit uM as
+        unit mole {pref: micro};
+        unit liter {expo: -1};
+    enddef;
+
+    def unit per_s as
+        unit s {expo: -1};
+    enddef;
+
+    def unit uM_per_s as
+        unit uM;
+        unit s {expo: -1};
+    enddef;
+
+    def unit per_uM_per_s as
+        unit uM {expo: -1};
+        unit s {expo: -1};
+    enddef;
+
+    def unit per_uM_s as
+        unit uM {expo: -1};
+        unit s {expo: -1};
+    enddef;
+  
+    //
+    //*********************************************************
+    //***       C   O   M   P   O   N   E   N   T   S       ***
+    //*********************************************************
+    //
+
+    def comp environment as
+        var t: second {pub: out};
+    enddef;
+
+    def comp KIR2DL4_HLAg parameters as
+        var t: second {pub: in};
+        var k_f1: per_uM_per_s {pub: in};
+        var k_r1: per_s {pub: in};
+        var k_f2: per_s {pub: in};
+        var k_f3: per_uM_per_s {pub: in};
+        var k_f4: per_uM_per_s {pub: in};
+        var k_r4: per_s {pub: in};
+        var k_f5: per_s {pub: in};
+        var k_f6: per_uM_per_s {pub: in};
+        var k_r6: per_s {pub: in};
+        var k_f7: per_s {pub: in};
+        var k_f21: per_uM_s {init: 0.0515956, pub: out};
+        var k_f22: per_s {init: 0.00297296, pub: out};
+        var k_f23: per_s {init: 0.00215999, pub: out};
+        var k_f24: per_s {init: 0.984383, pub: out};
+        var k_r21: per_s {init: 2.0772, pub: out};
+        var k_r23: per_uM_s {init: 0.334514, pub: out};
+        var Pi: uM {pub: in};
+        var pGrb2: uM {pub: in};
+        var HGDL4: uM {pub: in};
+        var stimEnd: s {pub: in};
+        var k_f12: per_uM_per_s {pub: in};
+        var k_r12: per_s {pub: in};
+        var k_f18: per_uM_per_s {init: 0.016521, pub: out};
+        var k_r18: per_s {init: 0.0517365, pub: out};
+    enddef;
+
+    def comp HLAGDL4_FC as
+        var t: s {pub: in};
+        var J18: uM_per_s;
+        var J1: uM_per_s {pub: in};
+        var J5: uM_per_s {pub: in};
+        var J_HGDL4: uM_per_s {pub: in};
+        var FC: uM {init: 1, pub: out};
+        var HLAGDL4_FC: uM {init: 0, pub: out};
+        var HGDL4: uM {init: 0};
+        var k_f18: per_uM_per_s {init: 0.016521};
+        var k_r18: per_s {init: 0.0517365};
+        
+        J18 = k_f18*J_HGDL4*FC-k_r18*HLAGDL4_FC;
+        ode(HGDL4, t) = J_HGDL4-J18;
+        ode(FC, t) = -J18+J5;
+        ode(HLAGDL4_FC, t) = J18-J1;
+    enddef;
+
+    def comp NFAT_cytokines as
+        var NFATN_n: uM {pub: in};
+        var NFATN_c: uM {pub: in};
+        var NFATp_n: uM {pub: in};
+        var NFATp_c: uM {pub: in};
+        var k_f5: per_s {pub: in};
+        var k_f6: per_s {pub: in};
+        var IFN: uM {pub: in};
+        var TNF: uM {pub: in};
+        var k_f19: per_s {pub: in};
+        var k_f20: per_s {pub: in};
+    enddef;
+    
+    def map between NFAT_Cycling_equations and dl4cytokines_parameter for
+        vars k_f1 and k_f21;
+        vars k_f2 and k_f22;
+        vars k_f3 and k_f23;
+        vars k_f4 and k_f24;
+        vars k_r1 and k_r21;
+        vars k_r3 and k_r23;
+    enddef;
+    
+    def map between HLAGDL4_FC and environment for
+        vars t and t;
+    enddef;
+
+    def map between FC_epsilon and environment for
+        vars t and t;
+    enddef;
+    
+    def map between environment and geometry for
+        vars t and t;
+    enddef;
+
+    def map between environment and NFAT_cytokines for
+        vars t and t;
+    enddef;
+    
+    def map between HLAGDL4_FC and KIR2DL4_HLAg for
+        vars J_HGDL4 and J_HGDL4;
+    enddef;
+
+    def map between HLAGDL4_FC and FC_epsilon for
+        vars FC and FC;
+        vars J1 and J1;
+        vars J5 and J5;
+        vars HLAGDL4_FC and HLAGDL4_FC;
+    enddef;
+
+    def map between PI3K and FC_epsilon for
+        vars J7 and J7;
+        vars pGrb2 and pGrb2;
+    enddef;
+    
+    def map between geometry and NFAT_cytokines for
+        vars NFATN_n and NFATN_n;
+        vars J_NFATNn and J_NFATNn;
+    enddef;
+
+    def map between NFAT_cytokines and geometry for
+        vars NFATN_n and NFATN_n;
+    enddef;
+
+    def map between NFAT_cytokines and NFAT_Cycling for
+        vars NFATN_c and NFATN_c;
+        vars NFATp_n and NFATp_n;
+        vars NFATp_c and NFATp_c;
+    enddef;
+    
+    def map between NFAT_cytokines and NFAT_cytokines for
+        vars k_f5 and k_f5;
+        vars k_f6 and k_f6;
+        vars IFN and IFN;
+        vars TNF and TNF;
+        vars k_f19 and k_f19;
+        vars k_f20 and k_f20;
+    enddef;
+
+    def map between KIR2DL4_HLAg and KIR2DL4_HLAg parameters for
+        vars k_f12 and k_f12;
+        vars k_r12 and k_r12;
+        vars HGDL4 and HGDL4;
+    enddef;
+
+    def map between FC_epsilon and KIR2DL4_HLAg parameters for
+        vars k_f1 and k_f1;
+        vars k_r1 and k_r1;
+        vars k_f2 and k_f2;
+        vars k_f3 and k_f3;
+        vars k_f4 and k_f4;
+        vars k_r4 and k_r4;
+        vars k_f5 and k_f5;
+        vars k_f6 and k_f6;
+        vars k_r6 and k_r6;
+        vars k_f7 and k_f7;
+        vars Pi and Pi;
+        vars pGrb2 and pGrb2;
+    enddef;
+    
+    def map between geometry and KIR2DL4_HLAg parameters for
+        vars Ccn and Ccn;
+    enddef;
+
+    def map between calcium and KIR2DL4_HLAg parameters for
+        vars stimEnd and stimEnd;
+    enddef;
+enddef;
+
+        var k_f1: per_nM_s {init: 7.68934e-6, pub: out};
+        var k_r1: per_s {init: 0.019256, pub: out};
+        var k_f2: per_s {init: 0.00144192, pub: out};
+        var k_f3: per_s {init: 0.000361944, pub: out};
+        var k_r3: per_nM_s {init: 4.70813e-5, pub: out};
+        var k_f4: per_s {init: 0.000444695, pub: out};
