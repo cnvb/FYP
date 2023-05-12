@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<model name="NFATCycling" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+<model cmeta:id="NFATCycling" name="NFATCycling" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
     <!--
 *******************************************************
 ***         U   N   I   T   S                       ***
@@ -29,22 +29,26 @@
 *********************************************************
 -->
     <component name="NFAT_Cycling">
-        <variable initial_value="7.68934e-3" name="k_f1" private_interface="out" units="per_uM_s"/>
-        <variable initial_value="0.00144192" name="k_f2" private_interface="out" units="per_s"/>
-        <variable initial_value="0.000361944" name="k_f3" private_interface="out" units="per_s"/>
-        <variable initial_value="0.000444695" name="k_f4" private_interface="out" units="per_s"/>
-        <variable initial_value="0.019256" name="k_r1" private_interface="out" units="per_s"/>
-        <variable initial_value="0.0470813" name="k_r3" private_interface="out" units="per_uM_s"/>
-        <variable name="k_f1" private_interface="in" public_interface="out" units="per_uM_s"/>
-        <variable name="k_f2" private_interface="in" units="per_s"/>
-        <variable name="k_f3" private_interface="in" units="per_s"/>
-        <variable name="k_f4" private_interface="in" units="per_s"/>
-        <variable name="k_r1" private_interface="in" units="per_s"/>
-        <variable name="k_r3" private_interface="in" units="per_uM_s"/>
+        <!--        var{v4} k_f1: per_uM_s {init: 7.68934e-3, priv: out};
+        var{v5} k_f2: per_s {init: 0.00144192, priv: out};
+        var{v6} k_f3: per_s {init: 0.000361944, priv: out};
+        var{v7} k_f4: per_s {init: 0.000444695, priv: out};
+        var{v8} k_r1: per_s {init: 0.019256, priv: out};
+        var{v9} k_r3: per_uM_s {init: 0.0470813, priv: out};
+        var{v4} k_f1: per_uM_s {priv: in, pub: out};
+        var{v5} k_f2: per_s {priv: in};
+        var{v6} k_f3: per_s {priv: in};
+        var{v7} k_f4: per_s {priv: in};
+        var{v8} k_r1: per_s {priv: in};
+        var{v9} k_r3: per_uM_s {priv: in};-->
+        <variable name="NFATp_n" private_interface="in" public_interface="out" units="uM"/>
+        <variable name="NFATp_c" private_interface="in" public_interface="out" units="uM"/>
+        <variable name="NFATN_n" private_interface="in" public_interface="out" units="uM"/>
+        <variable name="NFATN_c" private_interface="in" public_interface="out" units="uM"/>
         <variable name="act_N" private_interface="out" public_interface="in" units="dimensionless"/>
         <variable name="Ntot" private_interface="out" public_interface="in" units="uM"/>
-        <variable name="Ccn" private_interface="out" public_interface="in" units="dimensionless"/>
-        <variable name="t" private_interface="out" public_interface="in" units="s"/>
+        <variable cmeta:id="v16" name="Ccn" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable cmeta:id="v17" name="t" private_interface="out" public_interface="in" units="s"/>
         <variable name="J_NFATNn" private_interface="in" public_interface="out" units="uM_per_s"/>
     </component>
     <component name="NFAT_Cycling_equations">
@@ -52,21 +56,24 @@
         <variable name="J2" units="uM_per_s"/>
         <variable name="J3" units="uM_per_s"/>
         <variable name="J4" units="uM_per_s"/>
-        <variable name="k_f1" public_interface="in" units="per_uM_s"/>
-        <variable name="k_f2" public_interface="in" units="per_s"/>
-        <variable name="k_f3" public_interface="in" units="per_s"/>
-        <variable name="k_f4" public_interface="in" units="per_s"/>
-        <variable name="k_r1" public_interface="in" units="per_s"/>
-        <variable name="k_r3" public_interface="in" units="per_uM_s"/>
-        <variable initial_value="0.077917275" name="NFATp_n" public_interface="out" units="uM"/>
+        <variable cmeta:id="v4" name="k_f1" public_interface="in" units="per_uM_s"/>
+        <variable cmeta:id="v5" name="k_f2" public_interface="in" units="per_s"/>
+        <variable cmeta:id="v6" name="k_f3" public_interface="in" units="per_s"/>
+        <variable cmeta:id="v7" name="k_f4" public_interface="in" units="per_s"/>
+        <variable cmeta:id="v8" name="k_r1" public_interface="in" units="per_s"/>
+        <variable cmeta:id="v9" name="k_r3" public_interface="in" units="per_uM_s"/>
+        <variable initial_value="0.0" name="NFATp_n" public_interface="out" units="uM"/>
+        <!--0.000077917275-->
         <variable initial_value="0.9957805651" name="NFATp_c" public_interface="out" units="uM"/>
-        <variable initial_value="0.10902441" name="NFATN_n" public_interface="out" units="uM"/>
-        <variable initial_value="0.0004806012" name="NFATN_c" public_interface="out" units="uM"/>
+        <variable initial_value="0.0" name="NFATN_n" public_interface="out" units="uM"/>
+        <!--0.00010902441-->
+        <variable initial_value="0.0" name="NFATN_c" public_interface="out" units="uM"/>
+        <!--0.0000004806012-->
         <variable name="act_N" public_interface="in" units="dimensionless"/>
         <variable name="Ntot" public_interface="in" units="uM"/>
-        <variable name="Ccn" public_interface="in" units="dimensionless"/>
-        <variable name="t" public_interface="in" units="s"/>
-        <variable name="J_NFATNn" private_interface="in" public_interface="out" units="uM_per_s"/>
+        <variable cmeta:id="v16" name="Ccn" public_interface="in" units="dimensionless"/>
+        <variable cmeta:id="v17" name="t" public_interface="in" units="s"/>
+        <variable name="J_NFATNn" public_interface="out" units="uM_per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -92,7 +99,7 @@
                     </apply>
                 </apply>
             </apply>
-            <apply>
+            <apply id="eq_0">
                 <eq/>
                 <ci>J2</ci>
                 <apply>
@@ -125,7 +132,7 @@
                     </apply>
                 </apply>
             </apply>
-            <apply>
+            <apply id="eq_1">
                 <eq/>
                 <ci>J4</ci>
                 <apply>
@@ -181,6 +188,7 @@
                     <ci>J2</ci>
                 </apply>
             </apply>
+            <!--ode(NFATN_n, t) = J_NFATNn;-->
             <apply>
                 <eq/>
                 <apply>
@@ -196,35 +204,22 @@
                     <ci>J4</ci>
                 </apply>
             </apply>
-            <apply>
-                <eq/>
-                <apply>
-                    <diff/>
-                    <bvar>
-                        <ci>t</ci>
-                    </bvar>
-                    <ci>NFATN_n</ci>
-                </apply>
-                <apply>
-                    <minus/>
-                    <apply>
-                        <times/>
-                        <ci>J2</ci>
-                        <ci>Ccn</ci>
-                    </apply>
-                    <ci>J3</ci>
-                </apply>
-            </apply>
         </math>
     </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="NFAT_Cycling">
+            <component_ref component="NFAT_Cycling_equations"/>
+        </component_ref>
+    </group>
     <connection>
         <map_components component_1="NFAT_Cycling" component_2="NFAT_Cycling_equations"/>
-        <map_variables variable_1="k_f1" variable_2="k_f1"/>
-        <map_variables variable_1="k_f2" variable_2="k_f2"/>
-        <map_variables variable_1="k_f3" variable_2="k_f3"/>
-        <map_variables variable_1="k_f4" variable_2="k_f4"/>
-        <map_variables variable_1="k_r1" variable_2="k_r1"/>
-        <map_variables variable_1="k_r3" variable_2="k_r3"/>
+        <!--        vars k_f1 and k_f1;
+        vars k_f2 and k_f2;
+        vars k_f3 and k_f3;
+        vars k_f4 and k_f4;
+        vars k_r1 and k_r1;
+        vars k_r3 and k_r3;-->
         <map_variables variable_1="NFATp_n" variable_2="NFATp_n"/>
         <map_variables variable_1="NFATp_c" variable_2="NFATp_c"/>
         <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
@@ -233,5 +228,6 @@
         <map_variables variable_1="Ntot" variable_2="Ntot"/>
         <map_variables variable_1="Ccn" variable_2="Ccn"/>
         <map_variables variable_1="t" variable_2="t"/>
+        <map_variables variable_1="J_NFATNn" variable_2="J_NFATNn"/>
     </connection>
 </model>
