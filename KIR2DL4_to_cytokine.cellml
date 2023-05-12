@@ -96,12 +96,6 @@
         <variable initial_value="0" name="HGDL4" units="uM"/>
         <variable initial_value="0.016521" name="k_f18" units="per_uM_per_s"/>
         <variable initial_value="0.0517365" name="k_r18" units="per_s"/>
-        <!--                FC = sel
-                    case (t >= 0{s}) and (t <= 7200{s}):
-                        0{uM};
-                    otherwise:
-                        1{uM};
-                endsel;-->
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
