@@ -29,26 +29,26 @@
 *********************************************************
 -->
     <component name="NFAT_Cycling">
-        <!--        var{v4} k_f1: per_uM_s {init: 7.68934e-3, priv: out};
-        var{v5} k_f2: per_s {init: 0.00144192, priv: out};
-        var{v6} k_f3: per_s {init: 0.000361944, priv: out};
-        var{v7} k_f4: per_s {init: 0.000444695, priv: out};
-        var{v8} k_r1: per_s {init: 0.019256, priv: out};
-        var{v9} k_r3: per_uM_s {init: 0.0470813, priv: out};
-        var{v4} k_f1: per_uM_s {priv: in, pub: out};
-        var{v5} k_f2: per_s {priv: in};
-        var{v6} k_f3: per_s {priv: in};
-        var{v7} k_f4: per_s {priv: in};
-        var{v8} k_r1: per_s {priv: in};
-        var{v9} k_r3: per_uM_s {priv: in};-->
+        <!--        var k_f1: per_uM_s {init: 7.68934e-3, priv: out};
+        var k_f2: per_s {init: 0.00144192, priv: out};
+        var k_f3: per_s {init: 0.000361944, priv: out};
+        var k_f4: per_s {init: 0.000444695, priv: out};
+        var k_r1: per_s {init: 0.019256, priv: out};
+        var k_r3: per_uM_s {init: 0.0470813, priv: out};
+        var k_f1: per_uM_s {priv: in, pub: out};
+        var k_f2: per_s {priv: in};
+        var k_f3: per_s {priv: in};
+        var k_f4: per_s {priv: in};
+        var k_r1: per_s {priv: in};
+        var k_r3: per_uM_s {priv: in};-->
         <variable name="NFATp_n" private_interface="in" public_interface="out" units="uM"/>
         <variable name="NFATp_c" private_interface="in" public_interface="out" units="uM"/>
         <variable name="NFATN_n" private_interface="in" public_interface="out" units="uM"/>
         <variable name="NFATN_c" private_interface="in" public_interface="out" units="uM"/>
         <variable name="act_N" private_interface="out" public_interface="in" units="dimensionless"/>
         <variable name="Ntot" private_interface="out" public_interface="in" units="uM"/>
-        <variable cmeta:id="v16" name="Ccn" private_interface="out" public_interface="in" units="dimensionless"/>
-        <variable cmeta:id="v17" name="t" private_interface="out" public_interface="in" units="s"/>
+        <variable name="Ccn" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="t" private_interface="out" public_interface="in" units="s"/>
         <variable name="J_NFATNn" private_interface="in" public_interface="out" units="uM_per_s"/>
     </component>
     <component name="NFAT_Cycling_equations">
@@ -56,23 +56,20 @@
         <variable name="J2" units="uM_per_s"/>
         <variable name="J3" units="uM_per_s"/>
         <variable name="J4" units="uM_per_s"/>
-        <variable cmeta:id="v4" name="k_f1" public_interface="in" units="per_uM_s"/>
-        <variable cmeta:id="v5" name="k_f2" public_interface="in" units="per_s"/>
-        <variable cmeta:id="v6" name="k_f3" public_interface="in" units="per_s"/>
-        <variable cmeta:id="v7" name="k_f4" public_interface="in" units="per_s"/>
-        <variable cmeta:id="v8" name="k_r1" public_interface="in" units="per_s"/>
-        <variable cmeta:id="v9" name="k_r3" public_interface="in" units="per_uM_s"/>
+        <variable name="k_f1" public_interface="in" units="per_uM_s"/>
+        <variable name="k_f2" public_interface="in" units="per_s"/>
+        <variable name="k_f3" public_interface="in" units="per_s"/>
+        <variable name="k_f4" public_interface="in" units="per_s"/>
+        <variable name="k_r1" public_interface="in" units="per_s"/>
+        <variable name="k_r3" public_interface="in" units="per_uM_s"/>
         <variable initial_value="0.0" name="NFATp_n" public_interface="out" units="uM"/>
-        <!--0.000077917275-->
         <variable initial_value="0.9957805651" name="NFATp_c" public_interface="out" units="uM"/>
         <variable initial_value="0.0" name="NFATN_n" public_interface="out" units="uM"/>
-        <!--0.00010902441-->
         <variable initial_value="0.0" name="NFATN_c" public_interface="out" units="uM"/>
-        <!--0.0000004806012-->
         <variable name="act_N" public_interface="in" units="dimensionless"/>
         <variable name="Ntot" public_interface="in" units="uM"/>
-        <variable cmeta:id="v16" name="Ccn" public_interface="in" units="dimensionless"/>
-        <variable cmeta:id="v17" name="t" public_interface="in" units="s"/>
+        <variable name="Ccn" public_interface="in" units="dimensionless"/>
+        <variable name="t" public_interface="in" units="s"/>
         <variable name="J_NFATNn" public_interface="out" units="uM_per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -99,7 +96,7 @@
                     </apply>
                 </apply>
             </apply>
-            <apply id="eq_0">
+            <apply>
                 <eq/>
                 <ci>J2</ci>
                 <apply>
@@ -132,7 +129,7 @@
                     </apply>
                 </apply>
             </apply>
-            <apply id="eq_1">
+            <apply>
                 <eq/>
                 <ci>J4</ci>
                 <apply>

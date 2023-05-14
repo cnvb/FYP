@@ -283,6 +283,10 @@
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
     <connection>
+        <map_components component_1="environment" component_2="calcium"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
         <map_components component_1="HGDL4_FC" component_2="environment"/>
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
@@ -321,6 +325,14 @@
     <connection>
         <map_components component_1="Cytokines" component_2="geometry"/>
         <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
+    </connection>
+    <connection>
+        <map_components component_1="PI3K" component_2="calcium"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="PI3K" component_2="NFAT_Cycling_equations"/>
+        <map_variables variable_1="t" variable_2="t"/>
     </connection>
     <connection>
         <map_components component_1="NFAT_Cycling_equations" component_2="KIR2DL4_singnaling"/>
