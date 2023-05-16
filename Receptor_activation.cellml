@@ -32,7 +32,7 @@
         <variable name="t" public_interface="out" units="s"/>
     </component>
     <component name="receptor_activation">
-        <variable name="t" public_interface="in" units="s"/>
+        <variable name="t" public_interface="in" units="second"/>
         <variable name="J_HGDL4" public_interface="out" units="uM_per_s"/>
         <variable initial_value="0.02" name="k_f12" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.02" name="k_r12" public_interface="out" units="per_s"/>
@@ -85,17 +85,6 @@
                     <minus/>
                     <ci>J_HGDL4</ci>
                 </apply>
-            </apply>
-            <apply>
-                <eq/>
-                <apply>
-                    <diff/>
-                    <bvar>
-                        <ci>t</ci>
-                    </bvar>
-                    <ci>HGDL4</ci>
-                </apply>
-                <ci>J_HGDL4</ci>
             </apply>
         </math>
     </component>

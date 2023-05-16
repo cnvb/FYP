@@ -54,15 +54,15 @@
         <variable name="HGDL4_FC" public_interface="in" units="uM"/>
         <variable initial_value="0.01" name="Grb2" units="uM"/>
         <variable initial_value="0.0474" name="pLyn" units="uM"/>
-        <variable initial_value="54.77" name="k_f1" public_interface="in" units="per_uM_per_s"/>
-        <variable initial_value="0.0031" name="k_r1" public_interface="in" units="per_s"/>
+        <variable initial_value="54.77" name="k_f1" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.0031" name="k_r1" public_interface="out" units="per_s"/>
         <variable initial_value="0.00817889" name="k_f2" public_interface="out" units="per_s"/>
         <variable initial_value="0.0035" name="k_f3" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="10.58" name="k_f4" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.117" name="k_r4" public_interface="in" units="per_s"/>
-        <variable initial_value="33.72" name="k_f5" public_interface="in" units="per_s"/>
+        <variable initial_value="0.117" name="k_r4" public_interface="out" units="per_s"/>
+        <variable initial_value="33.72" name="k_f5" public_interface="out" units="per_s"/>
         <variable initial_value="0.414" name="k_f6" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.481" name="k_r6" public_interface="in" units="per_s"/>
+        <variable initial_value="0.481" name="k_r6" public_interface="out" units="per_s"/>
         <variable initial_value="11.42" name="k_f7" public_interface="out" units="per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
