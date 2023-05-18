@@ -236,6 +236,11 @@
         <map_variables variable_1="NFATp_c" variable_2="NFATp_c"/>
     </connection>
     <connection>
+        <map_components component_1="calcineurin" component_2="NFAT_Cycling"/>
+        <map_variables variable_1="act_N" variable_2="act_N"/>
+        <map_variables variable_1="Ntot" variable_2="Ntot"/>
+    </connection>
+    <connection>
         <map_components component_1="Cytokines" component_2="NFAT_Cytokines"/>
         <map_variables variable_1="k_f5" variable_2="k_f5"/>
         <map_variables variable_1="k_f6" variable_2="k_f6"/>
