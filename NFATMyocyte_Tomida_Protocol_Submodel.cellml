@@ -116,9 +116,9 @@
         <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
         <map_variables variable_1="J_NFATNn" variable_2="J_NFATNn"/>
     </connection>
-    <!--        def map between calcium and calcineurin for
-            vars Ca and Ca;
-        enddef;-->
+    <!--            def map between calcium and calcineurin for
+                vars Ca and Ca;
+            enddef;-->
     <connection>
         <map_components component_1="calcineurin" component_2="NFAT_Cycling"/>
         <map_variables variable_1="act_N" variable_2="act_N"/>

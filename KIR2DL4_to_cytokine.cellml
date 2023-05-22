@@ -6,9 +6,6 @@
     <import xlink:href="FC_epsilon.cellml">
         <component component_ref="FCepsilonRI" name="FCepsilonRI"/>
     </import>
-    <import xlink:href="PI3K.cellml">
-        <component component_ref="PI3K" name="PI3K"/>
-    </import>
     <import xlink:href="NFATMyocyte_Tomida_Protocol_Submodel.cellml">
         <component component_ref="geometry" name="geometry"/>
         <component component_ref="calcium" name="calcium"/>
@@ -16,9 +13,9 @@
         <component component_ref="NFAT_Cycling" name="NFAT_Cycling"/>
         <component component_ref="NFAT_Cycling_equations" name="NFAT_Cycling_equations"/>
     </import>
-    <import xlink:href="NFAT_Cytokines.cellml">
-        <component component_ref="NFAT_Cytokines" name="NFAT_Cytokines"/>
-    </import>
+    <!--    def import using "NFAT_Cytokines.cellml" for
+        comp NFAT_Cytokines using comp NFAT_Cytokines;
+    enddef;-->
     <!--
 *******************************************************
 ***         U   N   I   T   S                       ***
@@ -54,14 +51,45 @@
     <component name="environment">
         <variable name="t" public_interface="out" units="s"/>
     </component>
-    <component name="HGDL4_FC">
+    <component name="parameters">
+        <variable name="k_f12" public_interface="in" units="per_uM_per_s"/>
+        <variable name="k_r12" public_interface="in" units="per_uM_per_s"/>
+        <variable initial_value="6.18038" name="k_f1" public_interface="in" units="per_uM_per_s"/>
+        <variable initial_value="0.00148883" name="k_r1" public_interface="in" units="per_s"/>
+        <variable name="k_f2" public_interface="in" units="per_s"/>
+        <variable name="k_f3" public_interface="in" units="per_uM_per_s"/>
+        <variable name="k_f4" public_interface="in" units="per_uM_per_s"/>
+        <variable initial_value="0.13486" name="k_r4" public_interface="in" units="per_s"/>
+        <variable initial_value="0.804035" name="k_f5" public_interface="in" units="per_s"/>
+        <variable name="k_f6" public_interface="in" units="per_uM_per_s"/>
+        <variable initial_value="0.71853" name="k_r6" public_interface="in" units="per_s"/>
+        <variable name="k_f7" public_interface="in" units="per_s"/>
+        <variable name="Pi" public_interface="in" units="uM"/>
+        <variable name="Ccn" public_interface="in" units="dimensionless"/>
+        <variable name="Ntot" public_interface="in" units="uM"/>
+        <variable name="M" public_interface="in" units="uM"/>
+        <variable name="K_mN" public_interface="in" units="uM"/>
+        <variable name="n" public_interface="in" units="dimensionless"/>
+        <variable name="K_dN" public_interface="in" units="uM"/>
+        <variable initial_value="0.0515956" name="k_f21" public_interface="in" units="per_uM_s"/>
+        <variable initial_value="0.00297296" name="k_f22" public_interface="in" units="per_s"/>
+        <variable initial_value="0.00215999" name="k_f23" public_interface="in" units="per_s"/>
+        <variable initial_value="0.984383" name="k_f24" public_interface="in" units="per_s"/>
+        <variable initial_value="2.0772" name="k_r21" public_interface="in" units="per_s"/>
+        <variable initial_value="0.334514" name="k_r23" public_interface="in" units="per_uM_s"/>
+        <variable name="stimEnd" public_interface="in" units="s"/>
+        <variable name="pGrb2" public_interface="in" units="uM"/>
+        <variable name="HGDL4" public_interface="in" units="uM"/>
+        <variable name="act_N" public_interface="in" units="uM"/>
+    </component>
+    <component name="HG_FC">
         <variable name="t" public_interface="in" units="s"/>
         <variable name="J21" units="uM_per_s"/>
         <variable name="J1" public_interface="in" units="uM_per_s"/>
         <variable name="J5" public_interface="in" units="uM_per_s"/>
         <variable name="J_HGDL4" public_interface="in" units="uM_per_s"/>
         <variable initial_value="1" name="FC" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="HGDL4_FC" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="Hgdl4FC" public_interface="in" units="uM"/>
         <variable initial_value="0" name="HGDL4" units="uM"/>
         <variable initial_value="0.016521" name="k_f21" units="per_uM_per_s"/>
         <variable initial_value="0.0517365" name="k_r21" units="per_s"/>
@@ -80,7 +108,7 @@
                     <apply>
                         <times/>
                         <ci>k_r21</ci>
-                        <ci>HGDL4_FC</ci>
+                        <ci>Hgdl4FC</ci>
                     </apply>
                 </apply>
             </apply>
@@ -124,7 +152,7 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>HGDL4_FC</ci>
+                    <ci>Hgdl4FC</ci>
                 </apply>
                 <apply>
                     <minus/>
@@ -134,124 +162,337 @@
             </apply>
         </math>
     </component>
-    <component name="Cytokines">
+    <!--    def comp Cytokines as
+        var t: s {pub: in};
+        var NFATN_n: uM {pub: in};
+//        var NFATN_c: uM {pub: in};
+//        var NFATp_n: uM {pub: in};
+//        var NFATp_c: uM {pub: in};
+        var k_f5: per_s {pub: in};
+        var k_f6: per_s {pub: in};
+        var IFN: uM {pub: in};
+        var TNF: uM {pub: in};
+        var k_f19: per_s {pub: in};
+        var k_f20: per_s {pub: in};
+    enddef;-->
+    <component name="PI3k">
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="J5" units="uM_per_s"/>
+        <variable name="J6" units="uM_per_s"/>
+        <variable name="J7" public_interface="in" units="uM_per_s"/>
+        <variable name="pGrb2" public_interface="in" units="uM"/>
+        <variable initial_value="0.01" name="PI3K" units="uM"/>
+        <variable initial_value="0" name="PI3Kstar" units="uM"/>
+        <variable initial_value="0" name="pGrb2PI3K" units="uM"/>
+        <variable initial_value="7.5" name="k_f5" units="per_uM_per_s"/>
+        <variable initial_value="0.005" name="k_r5" units="per_s"/>
+        <variable initial_value="10.1" name="k_f6" units="per_s"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J5</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f5</ci>
+                        <ci>pGrb2</ci>
+                        <ci>PI3K</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r5</ci>
+                        <ci>pGrb2PI3K</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J6</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f6</ci>
+                    <ci>pGrb2PI3K</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pGrb2</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <ci>J7</ci>
+                        <ci>J5</ci>
+                    </apply>
+                    <ci>J6</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>PI3K</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J5</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pGrb2PI3K</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J5</ci>
+                    <ci>J6</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>PI3Kstar</ci>
+                </apply>
+                <ci>J6</ci>
+            </apply>
+        </math>
+    </component>
+    <component name="NFAT_Cytokines">
         <variable name="t" public_interface="in" units="s"/>
         <variable name="NFATN_n" public_interface="in" units="uM"/>
-        <variable name="NFATN_c" public_interface="in" units="uM"/>
-        <variable name="NFATp_n" public_interface="in" units="uM"/>
-        <variable name="NFATp_c" public_interface="in" units="uM"/>
-        <variable name="k_f5" public_interface="in" units="per_s"/>
-        <variable name="k_f6" public_interface="in" units="per_s"/>
-        <variable name="IFN" public_interface="in" units="uM"/>
-        <variable name="TNF" public_interface="in" units="uM"/>
-        <variable name="k_f19" public_interface="in" units="per_s"/>
-        <variable name="k_f20" public_interface="in" units="per_s"/>
+        <variable name="J_NFATNn" public_interface="in" units="uM_per_s"/>
+        <variable name="J5" units="uM_per_s"/>
+        <variable name="J6" units="uM_per_s"/>
+        <variable name="J19" units="uM_per_s"/>
+        <variable name="J20" units="uM_per_s"/>
+        <variable initial_value="0.0683688" name="k_f5" units="per_s"/>
+        <variable initial_value="23.1163" name="k_f6" units="per_s"/>
+        <variable initial_value="0" name="IFN" units="uM"/>
+        <variable initial_value="0" name="TNF" units="uM"/>
+        <variable initial_value="0.0291491" name="k_f19" units="per_s"/>
+        <variable initial_value="9.78575e-07" name="k_f20" units="per_s"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J5</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f5</ci>
+                    <ci>NFATN_n</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J6</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f6</ci>
+                    <ci>NFATN_n</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J19</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f19</ci>
+                    <ci>TNF</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J20</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f20</ci>
+                    <ci>IFN</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NFATN_n</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>J_NFATNn</ci>
+                        <ci>J5</ci>
+                    </apply>
+                    <ci>J6</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>IFN</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J5</ci>
+                    <ci>J20</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>TNF</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J6</ci>
+                    <ci>J19</ci>
+                </apply>
+            </apply>
+        </math>
     </component>
     <connection>
         <map_components component_1="receptor_activation" component_2="environment"/>
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
     <connection>
-        <map_components component_1="HGDL4_FC" component_2="environment"/>
+        <map_components component_1="HG_FC" component_2="environment"/>
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
     <connection>
         <map_components component_1="FCepsilonRI" component_2="environment"/>
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
+    <!--    def map between Cytokines and environment for
+        vars t and t;
+    enddef;-->
     <connection>
-        <map_components component_1="Cytokines" component_2="environment"/>
+        <map_components component_1="environment" component_2="PI3k"/>
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
     <connection>
-        <map_components component_1="environment" component_2="PI3K"/>
+        <map_components component_1="NFAT_Cytokines" component_2="environment"/>
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
     <connection>
-        <map_components component_1="environment" component_2="geometry"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
-    <connection>
-        <map_components component_1="environment" component_2="calcium"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
-    <connection>
-        <map_components component_1="environment" component_2="calcineurin"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
-    <connection>
-        <map_components component_1="environment" component_2="NFAT_Cycling"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
-    <connection>
-        <map_components component_1="environment" component_2="NFAT_Cycling_equations"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
-    <connection>
-        <map_components component_1="environment" component_2="NFAT_Cytokines"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
-    <connection>
-        <map_components component_1="PI3K" component_2="FCepsilonRI"/>
+        <map_components component_1="PI3k" component_2="FCepsilonRI"/>
         <map_variables variable_1="J7" variable_2="J7"/>
         <map_variables variable_1="pGrb2" variable_2="pGrb2"/>
     </connection>
     <connection>
-        <map_components component_1="receptor_activation" component_2="HGDL4_FC"/>
+        <map_components component_1="geometry" component_2="environment"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="receptor_activation" component_2="HG_FC"/>
         <map_variables variable_1="J_HGDL4" variable_2="J_HGDL4"/>
     </connection>
     <connection>
-        <map_components component_1="HGDL4_FC" component_2="FCepsilonRI"/>
+        <map_components component_1="HG_FC" component_2="FCepsilonRI"/>
         <map_variables variable_1="FC" variable_2="FC"/>
         <map_variables variable_1="J1" variable_2="J1"/>
         <map_variables variable_1="J5" variable_2="J5"/>
-        <map_variables variable_1="HGDL4_FC" variable_2="HGDL4_FC"/>
+        <map_variables variable_1="Hgdl4FC" variable_2="Hgdl4FC"/>
+    </connection>
+    <!--    def map between Cytokines and geometry for
+        vars NFATN_n and NFATN_n;
+    enddef;-->
+    <!--    def map between PI3K and calcium for
+        vars t and t;
+    enddef;-->
+    <!--    def map between PI3K and NFAT_Cycling_equations for
+        vars t and t;
+    enddef;-->
+    <!--    def map between Cytokines and NFAT_Cycling for
+        vars NFATN_c and NFATN_c;
+        vars NFATp_n and NFATp_n;
+        vars NFATp_c and NFATp_c;
+    enddef;-->
+    <!--    def map between Cytokines and NFAT_Cytokines for
+        vars k_f5 and k_f5;
+        vars k_f6 and k_f6;
+        vars IFN and IFN;
+        vars TNF and TNF;
+        vars k_f19 and k_f19;
+        vars k_f20 and k_f20;
+    enddef;-->
+    <connection>
+        <map_components component_1="receptor_activation" component_2="parameters"/>
+        <map_variables variable_1="k_f12" variable_2="k_f12"/>
+        <map_variables variable_1="k_r12" variable_2="k_r12"/>
+        <map_variables variable_1="HGDL4" variable_2="HGDL4"/>
     </connection>
     <connection>
-        <map_components component_1="Cytokines" component_2="geometry"/>
-        <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
+        <map_components component_1="NFAT_Cycling_equations" component_2="parameters"/>
+        <map_variables variable_1="k_f1" variable_2="k_f21"/>
+        <map_variables variable_1="k_f2" variable_2="k_f22"/>
+        <map_variables variable_1="k_f3" variable_2="k_f23"/>
+        <map_variables variable_1="k_f4" variable_2="k_f24"/>
+        <map_variables variable_1="k_r1" variable_2="k_r21"/>
+        <map_variables variable_1="k_r3" variable_2="k_r23"/>
     </connection>
     <connection>
-        <map_components component_1="calcineurin" component_2="geometry"/>
-        <map_variables variable_1="t" variable_2="t"/>
-        <map_variables variable_1="Ca" variable_2="Ca"/>
-    </connection>
-    <connection>
-        <map_components component_1="calcium" component_2="geometry"/>
-        <map_variables variable_1="t" variable_2="t"/>
-        <map_variables variable_1="Ca" variable_2="Ca"/>
-    </connection>
-    <connection>
-        <map_components component_1="PI3K" component_2="calcium"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
-    <connection>
-        <map_components component_1="PI3K" component_2="NFAT_Cycling_equations"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
-    <connection>
-        <map_components component_1="Cytokines" component_2="NFAT_Cycling"/>
-        <map_variables variable_1="NFATN_c" variable_2="NFATN_c"/>
-        <map_variables variable_1="NFATp_n" variable_2="NFATp_n"/>
-        <map_variables variable_1="NFATp_c" variable_2="NFATp_c"/>
-    </connection>
-    <connection>
-        <map_components component_1="calcineurin" component_2="NFAT_Cycling"/>
-        <map_variables variable_1="act_N" variable_2="act_N"/>
-        <map_variables variable_1="Ntot" variable_2="Ntot"/>
-    </connection>
-    <connection>
-        <map_components component_1="Cytokines" component_2="NFAT_Cytokines"/>
+        <map_components component_1="FCepsilonRI" component_2="parameters"/>
+        <map_variables variable_1="k_f1" variable_2="k_f1"/>
+        <map_variables variable_1="k_r1" variable_2="k_r1"/>
+        <map_variables variable_1="k_f2" variable_2="k_f2"/>
+        <map_variables variable_1="k_f3" variable_2="k_f3"/>
+        <map_variables variable_1="k_f4" variable_2="k_f4"/>
+        <map_variables variable_1="k_r4" variable_2="k_r4"/>
         <map_variables variable_1="k_f5" variable_2="k_f5"/>
         <map_variables variable_1="k_f6" variable_2="k_f6"/>
-        <map_variables variable_1="IFN" variable_2="IFN"/>
-        <map_variables variable_1="TNF" variable_2="TNF"/>
-        <map_variables variable_1="k_f19" variable_2="k_f19"/>
-        <map_variables variable_1="k_f20" variable_2="k_f20"/>
+        <map_variables variable_1="k_r6" variable_2="k_r6"/>
+        <map_variables variable_1="k_f7" variable_2="k_f7"/>
+        <map_variables variable_1="Pi" variable_2="Pi"/>
+        <map_variables variable_1="pGrb2" variable_2="pGrb2"/>
     </connection>
     <connection>
         <map_components component_1="geometry" component_2="NFAT_Cytokines"/>
         <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
         <map_variables variable_1="J_NFATNn" variable_2="J_NFATNn"/>
+    </connection>
+    <connection>
+        <map_components component_1="geometry" component_2="parameters"/>
+        <map_variables variable_1="Ccn" variable_2="Ccn"/>
+    </connection>
+    <connection>
+        <map_components component_1="calcineurin" component_2="parameters"/>
+        <map_variables variable_1="Ntot" variable_2="Ntot"/>
+        <map_variables variable_1="M" variable_2="M"/>
+        <map_variables variable_1="K_mN" variable_2="K_mN"/>
+        <map_variables variable_1="n" variable_2="n"/>
+        <map_variables variable_1="K_dN" variable_2="K_dN"/>
+        <map_variables variable_1="act_N" variable_2="act_N"/>
+    </connection>
+    <connection>
+        <map_components component_1="calcium" component_2="parameters"/>
+        <map_variables variable_1="stimEnd" variable_2="stimEnd"/>
     </connection>
 </model>

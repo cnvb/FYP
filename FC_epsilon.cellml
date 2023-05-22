@@ -40,20 +40,20 @@
         <variable name="J5" public_interface="out" units="uM_per_s"/>
         <variable name="J6" units="uM_per_s"/>
         <variable name="J7" public_interface="out" units="uM_per_s"/>
-        <variable initial_value="0" name="Lyn" units="uM"/>
+        <variable initial_value="0" name="Lyn" public_interface="out" units="uM"/>
         <variable initial_value="0.0474" name="FC" public_interface="in" units="uM"/>
-        <variable initial_value="0" name="pFC" units="uM"/>
-        <variable initial_value="0.025" name="Syk" units="uM"/>
-        <variable initial_value="0" name="pSyk" units="uM"/>
+        <variable initial_value="0" name="pFC" public_interface="out" units="uM"/>
+        <variable initial_value="0.025" name="Syk" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="pSyk" public_interface="out" units="uM"/>
         <variable initial_value="0" name="pGrb2" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="pHGDL4_FCLyn" units="uM"/>
-        <variable initial_value="0" name="pHGDL4_FCSyk" units="uM"/>
-        <variable initial_value="0" name="pSykGrb2" units="uM"/>
+        <variable initial_value="0" name="pHGDL4_FCLyn" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="pHGDL4_FCSyk" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="pSykGrb2" public_interface="out" units="uM"/>
         <variable initial_value="0.403" name="Pi" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="pHGDL4_FC" units="uM"/>
-        <variable name="HGDL4_FC" public_interface="in" units="uM"/>
-        <variable initial_value="0.01" name="Grb2" units="uM"/>
-        <variable initial_value="0.0474" name="pLyn" units="uM"/>
+        <variable initial_value="0" name="pHGDL4_FC" public_interface="out" units="uM"/>
+        <variable name="Hgdl4FC" public_interface="out" units="uM"/>
+        <variable initial_value="0.01" name="Grb2" public_interface="out" units="uM"/>
+        <variable initial_value="0.0474" name="pLyn" public_interface="out" units="uM"/>
         <variable initial_value="54.77" name="k_f1" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.0031" name="k_r1" public_interface="out" units="per_s"/>
         <variable initial_value="0.00817889" name="k_f2" public_interface="out" units="per_s"/>
@@ -73,7 +73,7 @@
                     <apply>
                         <times/>
                         <ci>k_f1</ci>
-                        <ci>HGDL4_FC</ci>
+                        <ci>Hgdl4FC</ci>
                         <ci>pLyn</ci>
                     </apply>
                     <apply>

@@ -26,7 +26,7 @@
 -->
     <component name="calcium">
         <variable name="t" public_interface="in" units="s"/>
-        <variable name="Ca" public_interface="in" units="uM"/>
+        <variable name="Ca" public_interface="out" units="uM"/>
         <variable initial_value="1800" name="stimEnd" public_interface="out" units="s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>

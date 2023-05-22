@@ -56,12 +56,12 @@
         <variable name="J2" units="uM_per_s"/>
         <variable name="J3" units="uM_per_s"/>
         <variable name="J4" units="uM_per_s"/>
-        <variable name="k_f1" public_interface="in" units="per_uM_s"/>
-        <variable name="k_f2" public_interface="in" units="per_s"/>
-        <variable name="k_f3" public_interface="in" units="per_s"/>
-        <variable name="k_f4" public_interface="in" units="per_s"/>
-        <variable name="k_r1" public_interface="in" units="per_s"/>
-        <variable name="k_r3" public_interface="in" units="per_uM_s"/>
+        <variable name="k_f1" public_interface="out" units="per_uM_s"/>
+        <variable name="k_f2" public_interface="out" units="per_s"/>
+        <variable name="k_f3" public_interface="out" units="per_s"/>
+        <variable name="k_f4" public_interface="out" units="per_s"/>
+        <variable name="k_r1" public_interface="out" units="per_s"/>
+        <variable name="k_r3" public_interface="out" units="per_uM_s"/>
         <variable initial_value="0.0" name="NFATp_n" public_interface="out" units="uM"/>
         <variable initial_value="0.9957805651" name="NFATp_c" public_interface="out" units="uM"/>
         <variable initial_value="0.0" name="NFATN_n" public_interface="out" units="uM"/>

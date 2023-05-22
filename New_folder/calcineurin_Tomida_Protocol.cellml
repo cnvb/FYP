@@ -22,7 +22,7 @@
         <variable initial_value="6" name="M" public_interface="out" units="uM"/>
         <variable initial_value="0.535" name="K_mN" public_interface="out" units="uM"/>
         <variable initial_value="2.92" name="n" public_interface="out" units="dimensionless"/>
-        <variable name="Ca" public_interface="in" units="uM"/>
+        <variable name="Ca" public_interface="out" units="uM"/>
         <variable name="act_N" public_interface="out" units="dimensionless"/>
         <variable initial_value="1.760" name="K_dN" public_interface="out" units="uM"/>
         <variable name="t" public_interface="in" units="s"/>
